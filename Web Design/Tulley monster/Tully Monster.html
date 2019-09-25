@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html>
 <head>
 	<title>The Tully Monster</title>
@@ -8,11 +8,17 @@
 </head>
 <body>
 
+
+
+
+	
 <h1>The Tully Monster</h1>
 
 <p>The Tully Monster is a fossilised creature believed to have lived 300 million years ago. It was discovered by and named after Francis Tully in 1958.</p>
-
+<div id="monster">
 <img src="TullyMonster.png">
+<button type="button" onclick="showHide()">Show/Hide</button>
+</div>
 
 <form name="question">
 <p id="box">Question - How long was the Tully Monster?</p> 
@@ -20,7 +26,7 @@
 <input type="text" name="answer">
 <p id="box2">Click below to find out where it lived</p>
 <button type="button" onclick="document.getElementById('box2').innerHTML = 'It lived in the troical estuaries of ILLinois, USA.'">Show answer</button>
-<input type="text" name="answer">
+
 
 
 
@@ -40,8 +46,8 @@ function validate(){
 	if (x == ""){
 		document.getElementById("box").style.color="red";
 
-	} else if (x == '35cm'){
-		alert('Correct!')
+	} else if (x == "35cm"){
+		alert('Correct!');
 	
 
 	}
@@ -49,7 +55,17 @@ function validate(){
 	
 	}
 
+function showHide(){
+	var x = document.getElementById("monster");
+	if(x.style.display == 'block')
+		x.style.display = 'none';
+		else
+		x.style.display = 'block';
 
+
+
+
+}
 
 
 
