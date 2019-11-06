@@ -5,11 +5,53 @@ BLACK = (0,0,0)
 WHITE = (255,255,255)
 BLUE = (50,50,255)
 YELLOW = (255,255,0)
+RED = (255,0,0)
 BROWN = (100,100,0)
 
 # -- Initialise PyGame
 pygame.init()
+computer = True
+def game_intro():
 
+    intro = True
+
+    while intro:
+        for event in pygame.event.get():
+            #print(event)
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                
+                
+        screen.fill(BLACK)
+        
+
+
+        mouse = pygame.mouse.get_pos()
+
+        print(mouse)
+        color = YELLOW
+        color2 = YELLOW
+        if (160 < mouse[0] and mouse[0] < 200) and (120 < mouse[1] and mouse[1] < 160):
+            color = RED
+            for event in pygame.event.get():
+           
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    intro = False
+                    computer = False
+            
+        if (426.7 < mouse[0] and mouse[0] < 486.7) and (120 < mouse[1] and mouse[1] < 160):
+            color2 = RED
+            for event in pygame.event.get():
+                 if event.type == pygame.MOUSEBUTTONDOWN:
+                    intro = False
+                    player = True
+
+        
+        pygame.draw.rect(screen, color,(160,120,40,40))
+        pygame.draw.rect(screen, color2,(426.7+40,120,40,40))
+        pygame.display.update()
+        clock.tick(15)
+        
 
 # -- Blank Screen
 size = (640,480)
@@ -19,8 +61,8 @@ screen = pygame.display.set_mode(size)
 pygame.display.set_caption("Pong")
 
 # -- Exit game flag set to false
-done = False
 
+computer = True
 
 
 
@@ -70,13 +112,13 @@ text = font.render("Lives: " + str(score), True, WHITE)
  
 # Put the image of the text on the screen at 250x250
 screen.blit(text, [250, 250])
-
+game_intro()
 ### -- Game Loop
-while not done:
+while computer == False:
 # -- User input and controls
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
-            done = True
+            computer = True
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_UP:
                  padd_direction = -1
@@ -105,7 +147,7 @@ while not done:
     y2_padd
 
     
-
+    #scores
     text = font.render("Lives: " + str(score), True, WHITE)
     text2 = font.render("Points: " + str(points), True, WHITE)
     
@@ -166,14 +208,14 @@ while not done:
             y_direction -= inc
 
     if score < 1:
-        done = True
+        pygame.quit()
     
     ymid = y2_padd +30
 
     if ymid > y_val:
-        y2_direction = -0.5
+        y2_direction = -1
     elif ymid < y_val:
-        y2_direction = 0.5
+        y2_direction = 1
 
     y2_padd += y2_direction
     
@@ -196,5 +238,5 @@ while not done:
     clock.tick(120)
     
 #End While - End of game loop
-pygame.quit()
+
 
