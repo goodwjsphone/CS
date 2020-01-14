@@ -10,6 +10,7 @@ import json
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
 BLUE = (50, 50, 255)
+RED = (255,0,0)
  
 # Screen dimensions
 SCREEN_WIDTH = 500
@@ -26,7 +27,7 @@ class Player(pygame.sprite.Sprite):
         super().__init__()
  
         # Set height, width
-        self.image = pygame.Surface([15, 15])
+        self.image = pygame.Surface([5, 5])
         self.image.fill(WHITE)
  
         # Make our top-left corner the passed-in location.
@@ -91,6 +92,26 @@ class Wall(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.y = y
         self.rect.x = x
+
+class Enemy(pygame.sprite.Sprite):
+    def __init__(self,x,y):
+
+        # enemy constructor
+        super().__init__()
+        height = 10
+        width = 10
+
+
+        self.image = pygame.Surface([width,height])
+        self.image.fill(RED)
+
+        self,rect = self.image.get_rect()
+        self.rect.y = y
+        self.rect.x = x
+
+  #  def seek(self):
+        
+        #shortest path algrothim
  
  
 # Call this function so the Pygame library can initialize itself
@@ -114,9 +135,9 @@ wall_list = pygame.sprite.Group()
 
 
 
-file = open("wallgrid.JSON","r")
+file = open("maze.JSON","r")
 
-
+speed = 1
 
 the = json.load(file)
 
@@ -142,7 +163,7 @@ for i in range (len(the)):
 
 
 # Create the player paddle object
-player = Player(50, 50)
+player = Player(10, 10)
 player.walls = wall_list
  
 all_sprite_list.add(player)
@@ -159,23 +180,23 @@ while not done:
  
         elif event.type == pygame.KEYDOWN:
             if event.key == pygame.K_LEFT:
-                player.changespeed(-3, 0)
+                player.changespeed(-speed, 0)
             elif event.key == pygame.K_RIGHT:
-                player.changespeed(3, 0)
+                player.changespeed(speed, 0)
             elif event.key == pygame.K_UP:
-                player.changespeed(0, -3)
+                player.changespeed(0, -speed)
             elif event.key == pygame.K_DOWN:
-                player.changespeed(0, 3)
+                player.changespeed(0, speed)
  
         elif event.type == pygame.KEYUP:
             if event.key == pygame.K_LEFT:
-                player.changespeed(3, 0)
+                player.changespeed(speed, 0)
             elif event.key == pygame.K_RIGHT:
-                player.changespeed(-3, 0)
+                player.changespeed(-speed, 0)
             elif event.key == pygame.K_UP:
-                player.changespeed(0, 3)
+                player.changespeed(0, speed)
             elif event.key == pygame.K_DOWN:
-                player.changespeed(0, -3)
+                player.changespeed(0, -speed)
             elif event.key ==  pygame.K_q:
                 pygame.quit()
  

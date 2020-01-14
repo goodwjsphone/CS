@@ -44,20 +44,21 @@ pygame.display.set_caption("My Window")
 # -- Exit game flag set to false
 done = False
 
+openfile = input("file to open ")
+savefile = input("file to save ")
+file = open(openfile,"r")
 
-file = open("NEWMAZE.JSON","r")
 
 
-
-the = json.load(file)
+arraycopy = json.load(file)
 last_pressed = []
-print(the)
+print(arraycopy)
 
 file.close()
 
-for i in range (len(the)):
-    for j in range (len(the[i])):
-        if the[i][j] == 1:
+for i in range (len(arraycopy)):
+    for j in range (len(arraycopy[i])):
+        if arraycopy[i][j] == 1:
             newwall = Wall(j*10,i*10)
             wall_list.add(newwall)
             all_sprite_list.add(newwall)
@@ -82,22 +83,22 @@ while not done:
 
     if pygame.mouse.get_pressed()[0]:
         pos = pygame.mouse.get_pos()
-        print("Space")
+        
 
         x = pos[0]//10
         y = pos[1]//10
 
 
         if [x,y] != last_pressed:
-            if  the[y][x] == 1:
-                the[y][x] = 0
-                print("1 to 0")
+            if  arraycopy[y][x] == 1:
+                arraycopy[y][x] = 0
+            
                 for wall in wall_list:
                     if wall.rect.collidepoint(pos):
                         wall.kill()
-            elif the[y][x] == 0:
-                the[y][x] = 1
-                print("0 to 1")
+            elif arraycopy[y][x] == 0:
+                arraycopy[y][x] = 1
+                
 
 
             last_pressed = [x,y]
@@ -111,9 +112,9 @@ while not done:
     pos = pygame.mouse.get_pos()
     
     
-    for i in range (len(the)):
-        for j in range (len(the[i])):
-            if the[i][j] == 1:
+    for i in range (len(arraycopy)):
+        for j in range (len(arraycopy[i])):
+            if arraycopy[i][j] == 1:
                 newwall = Wall(j*10,i*10)
                 wall_list.add(newwall)
                 all_sprite_list.add(newwall)    
@@ -144,5 +145,12 @@ while not done:
     clock.tick(60)
     
 #End While - End of game loop
+
+new = open(savefile,"w+")
+json.dump(arraycopy,new)
+new.close()
+
+
+
 pygame.quit()
 
